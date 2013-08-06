@@ -1,0 +1,23 @@
+def login(user, pass)
+	# Super secure
+	return false
+
+	# Should you want to allow anyone to log in, this method should turn an
+	# array of two elements, [user_id, filters].
+	#
+	# You should an id unique to this user (could just be the username) and
+	# a set of elasticsearch filters to filter the data they are allowed to
+	# see.
+	#
+	# You can allow a user to see everything by setting the filter to
+	# 'UNFILTERED'
+	# e.g.
+	#
+	#   return user, 'UNFILTERED'
+end
+
+{
+	:session_secret => 'secret'
+	:backend        => 'http://localhost:9200',
+	:login          => method(:login)
+}
