@@ -1,0 +1,76 @@
+= Kibana 3 authentication
+== Introduction
+This odd little rack application was built to serve a very particular need. I
+wanted to have a multi-tenant logstash installation that would allow customers
+to log in and view thier logs based on certain filters. Also I didn't really
+want dependencies, so there are none besides rack.
+
+So I did that, then I tried to make it reuseable for someone else. This is the
+result.
+
+== Setup
+I will assume that you can configure your own unicorns and webservers to host
+this correctly. This documentation will get you set up with a local server
+running under 'rackup'.
+
+=== Step one
+We need to download this repo, kibana, and rack.
+  $ git clone https://github.com/christian-marie/kibana3_auth.git
+  $ cd kibana3_auth
+  $ git submodule init && gitsubmodule update
+  $ bundle install --without development
+
+== Step two
+Configuration! Now, I figured pretty much everyone is going to have a different
+idea of how to authenticate a user and then filter logs. So you get to write
+code for this yourself. Don't panic, it's one function.
+
+The configuration is a ruby file in config/config.rb
+
+$ $EDITOR config/config.rb
+
+We need to specify a few things as a hash, these are all mandatory:
+:session_secret:: This must be set to a random, long, string. It is a secret!
+:backend:: The elasticsearch REST interface URI, maybe http://localhost:9200
+:login:: A #call able ruby object to recieve a username and password and return
+a set of ElasticSearch filters.
+
+=== Example config
+  # This method must return an array of two elements, the user_id to identify
+the access control level this user (or group of users) are assigned and a set
+of filters. The same user_id should be returned for the same filters assigned.
+  def login(user, pass)
+	# We want anyone with a name starting with p to see everything.
+	# We use the 'UNFILTERED' keyword to explicitly state this. 
+	return 'UNFILTERED' if user =~ /\Ap/
+
+	# Anyone with a long name must only see logs tagged with thier name
+	# or 'secret'
+	if user.size > 10 then
+		return({
+			'terms' => {
+				'tags' => [ user, 'secret' ]
+			}
+		})
+	end
+
+	# Otherwise no soup for you
+	false
+  end
+
+  {
+  	:session_secret => 'CHANGE ME'
+  	:backend        => 'http://localhost:9200',
+  	:login          => method(:login)
+  }
+
+== Step three
+Configure kibana to hit ElasticSearch on the port on which you plan to run the
+rack application. For example, should you wish to run on port 8000:
+  $ sed -i s/9200/8000/ kibana/config.js
+
+== Step four
+Profit!
+ $ bundle exec rackup -p 8000
+
+Obviously in production you want to run this under nginx/unicorn or something.
