@@ -6,7 +6,6 @@ require 'helpers'
 class Router
 	include Helpers
 
-	ALLOWED_VERBS = %w|GET POST|
 	# XXX Should be in the config
 	LOGSTASH_INDEX = /logstash-[\d\.]{10}/
 

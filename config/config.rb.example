@@ -17,7 +17,8 @@ def login(user, pass)
 end
 
 {
-	:session_secret => 'secret'
+	# XXX CHANGE ME! XXX
+	:session_secret => 'CHANGEME'
 	:backend        => 'http://localhost:9200',
 	:login          => method(:login)
 }
