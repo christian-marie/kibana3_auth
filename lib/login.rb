@@ -62,18 +62,9 @@ class Login
 	end
 
 	def configurable_login(user, pass)
-		ret = @config[:login].call(user, pass)
-		if ret.is_a?(Array) && ret.size != 2 then
-			raise ::RuntimeError, 'Login method should return '\
-				'an array of two elements, the user id '\
-				'and the filters'
-		end
+		filters = @config[:login].call(user, pass)
+		return filters unless filters
 
-		# If the login returned false or nil, pass that on now.
-		return ret unless ret
-
-		user_id, filters = ret
-		@env['rack.session'][:user_id] = user_id
 		@env['rack.session'][:filters] = filters
 	end
 end

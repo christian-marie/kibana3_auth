@@ -55,16 +55,12 @@ class ESProxy < Forwarder
 	end
 
 	def filters
-		@env['rack.session'][:filters] or raise 'Specify filters!'
+		@env['rack.session'][:filters]
 	end
 
-	# Hash the user_id, as anyone can view /_aliases, we would prefer not
-	# to give out a really easy to view list of all user ids.
-	#
-	# XXX Should really filter the output to omit the aliases bit
+	# Hash the filters so that we can reuse identical filters.
 	def user_id
-		@env['rack.session'][:user_id] or raise 'Specify a user_id!'
-		Digest::MD5::hexdigest(@env['rack.session'][:user_id])
+		Digest::MD5::hexdigest(self.filters.to_json)
 	end
 
 	# This is run before the request is sent upstream.

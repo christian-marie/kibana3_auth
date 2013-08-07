@@ -15,7 +15,6 @@ describe ::ESProxy do
 	context 'with session' do
 		before :each do
 			@session = {
-				:user_id => 'uid',
 				:filters => {:match => 'magic'}
 			}
 		end
@@ -36,8 +35,8 @@ describe ::ESProxy do
 			# Here is the expected filter creation request.
 			expected_request = '{"actions":'\
 				'[{"add":{"index":"logstash-2013.08.02",'\
-				'"alias":"logstash-2013.08.02_9871d3a2c5'\
-				'54b27151cacf1422eec048",'\
+				'"alias":"logstash-2013.08.02_f1ce5a347c'\
+				'246197526e438fa58f3c7f",'\
 				'"filter":{"match":"magic"}}}]}'
 			stub_request(:post, "http://localhost:9200/_aliases").
 				with(:body => expected_request)
@@ -55,7 +54,7 @@ describe ::ESProxy do
 			stub_request(
 				:get,
 				"http://localhost:9200/logstash-2013.08.02_"\
-					"9871d3a2c554b27151cacf1422eec048/"\
+					"f1ce5a347c246197526e438fa58f3c7f/"\
 					"_search"
 			).to_return(:status => 200, :body => "PONY LOGS")
 

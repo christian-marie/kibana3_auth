@@ -80,7 +80,7 @@ describe ::Login do
 				:login => lambda do |user, pass|
 					expect(user).to eql('1')
 					expect(pass).to eql('2')
-					['uid', 'filters']
+					'filters'
 				end
 			}
 
@@ -93,7 +93,6 @@ describe ::Login do
 			)
 
 			expect(@app.env['rack.session']).to eql({
-				:user_id   => "uid",
 				:filters   => "filters",
 				:logged_in => true
 			})
