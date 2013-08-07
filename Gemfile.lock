@@ -56,7 +56,7 @@ GEM
     rspec-expectations (2.14.0)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.14.2)
-    safe_yaml (0.9.4)
+    safe_yaml (0.9.5)
     shotgun (0.9)
       rack (>= 1.0)
     slop (3.4.6)
