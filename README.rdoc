@@ -41,28 +41,28 @@ We need to specify a few things as a hash, these are all mandatory:
   # set of filters. The same user_id should be returned for the same filters
   # assigned.
   def login(user, pass)
-  # We want anyone with a name starting with p to see everything.
-  # We use the 'UNFILTERED' keyword to explicitly state this. 
-  return 'UNFILTERED' if user =~ /\Ap/
-
-  # Anyone with a long name must only see logs tagged with thier name
-  # or 'secret'
-  if user.size > 10 then
-    return({
-      'terms' => {
-        'tags' => [ user, 'secret' ]
-      }
-    })
+          # We want anyone with a name starting with p to see everything.
+          # We use the 'UNFILTERED' keyword to explicitly state this. 
+          return 'UNFILTERED' if user =~ /\Ap/
+         
+          # Anyone with a long name must only see logs tagged with thier name
+          # or 'secret'
+          if user.size > 10 then
+                  return({
+                          'terms' => {
+                                  'tags' => [ user, 'secret' ]
+                          }
+                  })
+          end
+         
+          # Otherwise no soup for you
+          false
   end
-
-  # Otherwise no soup for you
-  false
-  end
-
+ 
   {
-    :session_secret => 'CHANGE ME'
-    :backend        => 'http://localhost:9200',
-    :login          => method(:login)
+          :session_secret => 'CHANGE ME'
+          :backend        => 'http://localhost:9200',
+          :login          => method(:login)
   }
 
 === Step three
