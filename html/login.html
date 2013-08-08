@@ -1,19 +1,24 @@
 <html>
-	<div style="margin: 0 auto; width: 800px;">
-		<h1> Login to kibana </h1>
-		<form method="post">
-			<p>
-				<label for="user">Username: </label>
-				<input type="text" name="user">
-			</p>
-			<p>
-				<label for="pass">Password: </label>
-				<input type="password" name="pass">
-			</p>
-			<p>
-				<input type="submit" value="Log in">
-			</p>
-		</form>
+<body>
+<style>
+body { background-color: #272b30; color:#ddd; font-family: sans-serif; font-size: 14px }
+fieldset { -webkit-border-radius: 5px; padding: 20px; }
+legend { text-align:center }
+.bucket { width: 100% }
+.button { width: 100%; text-align: center}
+.display { margin: 200px auto; width: 300px }
+input {  width: 70% }
+.field { text-align: center; padding: 0 0 5 0 }
+</style>
+<div class="bucket">
+	<div class="display">
+	<form method="post"><fieldset>
+		<legend>login to kibana</legend>
+		<div class="field"><input type="text" placeholder="username" name="user"></div>
+		<div class="field"><input type="password" placeholder="password" name="pass"></div>
+		<div class="button"><input type="submit" value="log in"><div>
+	</fieldset></form>
 	</div>
-	</div>
+</div>
+</body>
 </html>
