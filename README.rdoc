@@ -17,7 +17,7 @@ running under 'rackup'.
 We need to download this repo, kibana, and rack.
   $ git clone https://github.com/christian-marie/kibana3_auth.git
   $ cd kibana3_auth
-  $ git submodule init && gitsubmodule update
+  $ git submodule init && git submodule update
   $ bundle install --without development
 
 === Step two
