@@ -15,6 +15,8 @@ class Router
 		%r{\A/_aliases/*?\z} => :upstream_elastic_search,
 		%r{\A/#{LOGSTASH_INDEX}/_search/*?\z} => 
 			:upstream_elastic_search,
+		%r{\A/kibana-int/dashboard/\w+} =>
+			:upstream_elastic_search,
 		// => :upstream_kibana
 	}
 

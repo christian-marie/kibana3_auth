@@ -52,6 +52,14 @@ describe ::Router do
 				to eql(200)
 			expect(last_response.body).to eql('hai')
 		end
+
+		it 'hits elasticsearch on /kibana-int/dashboard/foo' do
+			::ESProxy.any_instance.should_receive(:call).
+				and_return([200, {}, ['hai']])
+			expect(post('/kibana-int/dashboard/foo/').status).
+				to eql(200)
+			expect(last_response.body).to eql('hai')
+		end
 	end
 
 	context 'without session' do

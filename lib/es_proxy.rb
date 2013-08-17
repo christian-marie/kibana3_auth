@@ -74,14 +74,16 @@ class ESProxy < Forwarder
 		request = Rack::Request.new(@env)
 
 		case @env['PATH_INFO']
-		when /^\/_aliases\/*?$/
+		when %r{\A/_aliases/*?\z}
 			raise 'Must GET' unless request.get?
 			# Flag the aliases to be requested when we make the
 			# request later on
 			@env['ALIAS_REQUEST'] = true
-		when /^\/logstash-[\d\.]{10}\/_search\/*?$/
+		when %r{\A/logstash-[\d\.]{10}/_search/*?\z}
 			# 
 			rewrite_search_request
+		when %r{\A/kibana-int/dashboard/\w+\z}
+			privatise_dashboard
 		else
 			raise 'You should not be here, this is a bug'
 		end
@@ -100,5 +102,11 @@ class ESProxy < Forwarder
 			match,
 			"_#{self.user_id}"
 		)
+	end
+
+	# Make it appear as if each user has thier own private saved
+	# dashboards. This is done by adding the user_id to the request.
+	def privatise_dashboard
+		@env['PATH_INFO'].gsub!('kibana-int', "kibana-int_#{self.user_id}")
 	end
 end

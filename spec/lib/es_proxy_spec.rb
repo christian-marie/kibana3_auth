@@ -62,5 +62,18 @@ describe ::ESProxy do
 			expect(last_response.status).to eql(200)
 			expect(last_response.body).to eql('PONY LOGS')
 		end
+
+		it 'makes private a put to dashboards' do
+			stub_request(
+				:put,
+				"http://localhost:9200/kibana-int_"\
+					"f1ce5a347c246197526e438fa58f3c7f/"\
+					"dashboard/test"
+			).to_return(:status => 200, :body => "YAY")
+
+			put('/kibana-int/dashboard/test')
+			expect(last_response.status).to eql(200)
+			expect(last_response.body).to eql('YAY')
+		end
 	end
 end
