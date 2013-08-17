@@ -14,10 +14,10 @@ this correctly. This documentation will get you set up with a local server
 running under 'rackup'.
 
 == Features
- * Easy setup: one method to take a username and password then return a filter
- * Serves static kibana pages from within the application
- * Private dashboards per user
- * HTML login form
+* Easy setup: one method to take a username and password then return a filter
+* Serves static kibana pages from within the application
+* Private dashboards per user
+* HTML login form
 
 === Step one
 We need to download this repo, kibana, and rack.
