@@ -13,11 +13,17 @@ I will assume that you can configure your own unicorns and webservers to host
 this correctly. This documentation will get you set up with a local server
 running under 'rackup'.
 
+== Features
+ * Easy setup: one method to take a username and password then return a filter
+ * Serves static kibana pages from within the application
+ * Private dashboards per user
+ * HTML login form
+
 === Step one
 We need to download this repo, kibana, and rack.
   $ git clone https://github.com/christian-marie/kibana3_auth.git
   $ cd kibana3_auth
-  $ git submodule init && gitsubmodule update
+  $ git submodule init && git submodule update
   $ bundle install --without development
 
 === Step two
