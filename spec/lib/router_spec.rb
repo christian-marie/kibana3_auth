@@ -28,6 +28,10 @@ describe ::Router do
 			responses.each do |r|
 				expect(r.status).to eql(200)
 				expect(r.body).to eql(responses.first.body)
+				expect(r.headers).to include(
+					'Cache-Control' => 'max-age=0, '\
+						'must-revalidate'
+				)
 			end
 
 			# Should have our header in it

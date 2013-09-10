@@ -72,6 +72,7 @@ class Router
 			new_body.gsub!(/(<body.*?>)/, "#{$1}#{html_header}")
 
 			headers['Content-Length'] = new_body.bytesize.to_s
+			headers['Cache-Control'] = 'max-age=0, must-revalidate'
 			response = status, headers, [new_body]
 		end
 
