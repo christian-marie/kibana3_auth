@@ -64,12 +64,12 @@ class Router
 			# 304 means 304 for us too
 			return response if status == 304
 
-			header = html('kibana_header')
+			html_header = html('kibana_header')
 
 			new_body = ''
 			body.each{|i| new_body += i}
 
-			new_body.gsub!(/(<body.*?>)/, "#{$1}#{header}")
+			new_body.gsub!(/(<body.*?>)/, "#{$1}#{html_header}")
 
 			headers['Content-Length'] = new_body.bytesize.to_s
 			response = status, headers, [new_body]
