@@ -63,9 +63,9 @@ We need to specify a few things as a hash, these are all mandatory:
   end
  
   {
-          :session_secret => 'CHANGE ME'
+          :session_secret => 'CHANGE ME',
           :backend        => 'http://localhost:9200',
-          :login          => method(:login)
+          :login          => method(:login),
   }
 
 === Step three
