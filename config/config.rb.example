@@ -11,7 +11,7 @@ end
 
 {
 	# XXX CHANGE ME! XXX
-	:session_secret => 'CHANGEME'
+	:session_secret => 'CHANGEME',
 	:backend        => 'http://localhost:9200',
-	:login          => method(:login)
+	:login          => method(:login),
 }
