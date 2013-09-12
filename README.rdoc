@@ -8,16 +8,16 @@ want dependencies, so there are none besides rack.
 So I did that, then I tried to make it reuseable for someone else. This is the
 result.
 
-== Setup
-I will assume that you can configure your own unicorns and webservers to host
-this correctly. This documentation will get you set up with a local server
-running under 'rackup'.
-
 == Features
 * Easy setup: one method to take a username and password then return a filter
 * Serves static kibana pages from within the application
 * Private dashboards per user
 * HTML login form
+
+== Setup
+I will assume that you can configure your own unicorns and webservers to host
+this correctly. This documentation will get you set up with a local server
+running under 'rackup'.
 
 === Step one
 We need to download this repo, kibana, and rack.
@@ -41,7 +41,6 @@ We need to specify a few things as a hash, these are all mandatory:
 :login:: A #call able ruby object to recieve a username and password and return a set of ElasticSearch filters.
 
 ==== Example config
-
   # This method must return an ElasticSearch filter or false
   def login(user, pass)
           # We want anyone with a name starting with p to see everything.
