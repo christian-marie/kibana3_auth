@@ -3,10 +3,14 @@
 This odd little rack application was built to serve a very particular need. I
 wanted to have a multi-tenant logstash installation that would allow customers
 to log in and view thier logs based on certain filters. Also I didn't really
-want dependencies, so there are none besides rack.
+want dependencies, so there are none besides rack and JSON.
 
 So I did that, then I tried to make it reuseable for someone else. This is the
 result.
+
+== Tested on
+ * Production tested on ruby-1.9.3-p385
+ * Unit tests pass on ruby-1.8.7p371
 
 == Features
 * Easy setup: one method to take a username and password then return a filter
@@ -22,7 +26,7 @@ running under 'rackup'.
 === Step one
 We need to download this repo, kibana, and rack.
   $ git clone https://github.com/christian-marie/kibana3_auth.git
-  $ cd kibana3_auth
+  $ cd kibana3_auth && git checkout v1.0.0-alpha.1
   $ git submodule init && git submodule update
   $ bundle install --without development
 
