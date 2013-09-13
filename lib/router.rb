@@ -1,7 +1,7 @@
 require 'rack'
 require 'login'
 require 'es_proxy'
-require 'helpers'
+require 'kibana'
 
 class Router
 	include Helpers
@@ -25,9 +25,9 @@ class Router
 	def initialize(config)
 		@config = config
 
-		@upstream_kibana = method(:serve_kibana)
-		@upstream_login = Login.new(config)
-		@upstream_elastic_search = ESProxy.new(config)
+		@upstream_kibana = ::Kibana.new
+		@upstream_login = ::Login.new(config)
+		@upstream_elastic_search = ::ESProxy.new(config)
 	end
 
 	def call(env)
@@ -37,7 +37,7 @@ class Router
 			if env['PATH_INFO'] == '/login'
 				return self.upstream_login.call(env)
 			end
-			response = Rack::Response.new
+			response = ::Rack::Response.new
 			response.redirect('/login')
 			return response.finish
 		end
@@ -49,33 +49,5 @@ class Router
 				return self.send(sym).call(env)
 			end
 		end
-	end
-
-	def serve_kibana env
-		# Default to /index.html
-		if env['PATH_INFO'].delete('/').empty? then
-			env['PATH_INFO'] = '/index.html'
-		end
-
-		response = Rack::File.new('kibana').call(env)
-		if env['PATH_INFO'] == '/index.html' then
-			# Tack on our header to add a logout button
-			status, headers, body = response
-			# 304 means 304 for us too
-			return response if status == 304
-
-			html_header = html('kibana_header')
-
-			new_body = ''
-			body.each{|i| new_body += i}
-
-			new_body.gsub!(/(<body.*?>)/, "#{$1}#{html_header}")
-
-			headers['Content-Length'] = new_body.bytesize.to_s
-			headers['Cache-Control'] = 'max-age=0, must-revalidate'
-			response = status, headers, [new_body]
-		end
-
-		return response
 	end
 end
