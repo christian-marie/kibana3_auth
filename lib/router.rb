@@ -6,19 +6,17 @@ require 'kibana'
 class Router
 	include Helpers
 
-	# XXX Should be in the config
-	LOGSTASH_INDEX = /logstash-[\d\.]{10}/
-
 	# Evaluated in order, from top to bottom.
-	URL_MAP = {
-		%r{\A/(?:logout|login)/*?\z} => :upstream_login,
-		%r{\A/_aliases/*?\z} => :upstream_elastic_search,
-		%r{\A/#{LOGSTASH_INDEX}/_search/*?\z} => 
-			:upstream_elastic_search,
-		%r{\A/kibana-int/dashboard/\w+} =>
-			:upstream_elastic_search,
-		// => :upstream_kibana
-	}
+	URL_MAP = [
+		[%r{\A/(?:logout|login)/*?\z}    , :upstream_login ]         ,
+		[%r{\A/_aliases/*?\z}            , :upstream_elastic_search] ,
+		[
+			%r{\A/logstash-[\d\.]{10}/_search/*?\z},
+   			:upstream_elastic_search
+		],
+		[%r{\A/kibana-int/dashboard/\w+} , :upstream_elastic_search] ,
+		[//                              , :upstream_kibana]         ,
+	]
 
 	attr_reader :upstream_kibana, :upstream_login, :upstream_elastic_search
 

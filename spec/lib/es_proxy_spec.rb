@@ -33,15 +33,17 @@ describe ::ESProxy do
 					:body => upstream_response
 				)
 			# Here is the expected filter creation request.
-			expected_request = '{"actions":'\
+			expected_request = JSON.parse('{"actions":'\
 				'[{"add":{"index":"logstash-2013.08.02",'\
 				'"alias":"logstash-2013.08.02_f1ce5a347c'\
 				'246197526e438fa58f3c7f",'\
-				'"filter":{"match":"magic"}}}]}'
-			stub_request(:post, "http://localhost:9200/_aliases").
-				with(:body => expected_request)
-
-
+				'"filter":{"match":"magic"}}}]}')
+			stub_request(
+				:post, "http://localhost:9200/_aliases"
+			).with {|request|
+				expect(JSON.parse(request.body)).
+					to eql(expected_request)
+			}
 
 			get('/_aliases')
 

@@ -52,7 +52,7 @@ describe ::Login do
 				{
 					:user => 'dude',
 					:pass => 'man'
-				},
+				}
 			)
 
 			expect(last_response.status).to eql(302)
