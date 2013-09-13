@@ -17,6 +17,7 @@ GEM
     guard-rspec (3.0.2)
       guard (>= 1.8)
       rspec (~> 2.13)
+    json (1.8.0)
     listen (1.2.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -57,6 +58,7 @@ PLATFORMS
 
 DEPENDENCIES
   guard-rspec
+  json
   rack
   rack-test
   shotgun

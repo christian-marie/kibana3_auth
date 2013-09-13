@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rack'
+gem 'json'
 
 group :development do
 	gem 'shotgun'
