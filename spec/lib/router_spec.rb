@@ -64,6 +64,15 @@ describe ::Router do
 				to eql(200)
 			expect(last_response.body).to eql('hai')
 		end
+
+		it 'routes to logout' do
+			::Login.any_instance.should_receive(:call).
+				and_return([200, {}, ['logout']])
+
+			get '/logout'
+			expect(last_response.status).to eql(200)
+			expect(last_response.body).to eql('logout')
+		end
 	end
 
 	context 'without session' do
