@@ -94,7 +94,29 @@ describe ::Login do
 
 			expect(@app.env['rack.session']).to eql({
 				:filters   => "filters",
-				:logged_in => true
+				:logged_in => true,
+				:namespace => "12",
+			})
+		end
+
+		it 'should try the optional namespace method' do
+			@config = {
+				:login => Proc.new {1},
+				:dashboard_namespace => lambda { |u, p| "#{p}#{u}" },
+			}
+
+			post(
+				'/login',
+				{
+					:user => '1',
+					:pass => '2',
+				}
+			)
+
+			expect(@app.env['rack.session']).to eql({
+				:filters   => 1,
+				:logged_in => true,
+				:namespace => "21",
 			})
 		end
 	end

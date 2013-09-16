@@ -15,7 +15,7 @@ result.
 == Features
 * Easy setup: one method to take a username and password then return a filter
 * Serves static kibana pages from within the application
-* Private dashboards per user
+* Private dashboards per user (with configurable namespaces)
 * HTML login form
 
 == Setup
@@ -81,3 +81,19 @@ Profit!
  $ bundle exec rackup -p 8000
 
 Obviously in production you want to run this under nginx/unicorn or something.
+
+=== Optional configurable dashboard namespaces
+Dashboards are namespaced by default by a hash of the username password.
+You can override this with the :dashboard_namespace configuration parameter.
+
+For example, to give everyone the same namespace and allow anyone access:
+
+  {
+  	:session_secret => 'CHANGE ME',
+  	:backend => 'http://localhost:9200',
+  	:login => Proc.new{ 'UNFILTERED' },
+  	:dashboard_namespace => lambda {|user, pass|
+  		# ignore user and pass, everyone is a potato
+  		"POTATO!"
+  	}
+  }

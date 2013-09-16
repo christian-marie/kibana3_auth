@@ -61,10 +61,20 @@ class Login
 		response.finish
 	end
 
+	def default_namespace user, pass
+		"#{user}#{pass}"
+	end
+
 	def configurable_login(user, pass)
 		filters = @config[:login].call(user, pass)
+
+		# Login failed
 		return filters unless filters
 
+		namespace_lambda = @config[:dashboard_namespace] \
+			|| method(:default_namespace)
+
 		@env['rack.session'][:filters] = filters
+		@env['rack.session'][:namespace] = namespace_lambda.call(user,pass)
 	end
 end

@@ -15,7 +15,8 @@ describe ::ESProxy do
 	context 'with session' do
 		before :each do
 			@session = {
-				:filters => {:match => 'magic'}
+				:filters => {:match => 'magic'},
+				:namespace => 'namespace'
 			}
 		end
 
@@ -35,8 +36,8 @@ describe ::ESProxy do
 			# Here is the expected filter creation request.
 			expected_request = JSON.parse('{"actions":'\
 				'[{"add":{"index":"logstash-2013.08.02",'\
-				'"alias":"logstash-2013.08.02_f1ce5a347c'\
-				'246197526e438fa58f3c7f",'\
+				'"alias":"logstash-2013.08.02_baee106842'\
+				'9a8e0b44179ca85b8d51bf3a10746d",'\
 				'"filter":{"match":"magic"}}}]}')
 			stub_request(
 				:post, "http://localhost:9200/_aliases"
@@ -56,8 +57,8 @@ describe ::ESProxy do
 			stub_request(
 				:get,
 				"http://localhost:9200/logstash-2013.08.02_"\
-					"f1ce5a347c246197526e438fa58f3c7f/"\
-					"_search"
+					"baee1068429a8e0b44179ca85b8d51bf3a"\
+					"10746d/_search"
 			).to_return(:status => 200, :body => "PONY LOGS")
 
 			get('/logstash-2013.08.02/_search')
@@ -69,7 +70,8 @@ describe ::ESProxy do
 			stub_request(
 				:put,
 				"http://localhost:9200/kibana-int_"\
-					"f1ce5a347c246197526e438fa58f3c7f/"\
+					"1963ebc61173a88a038513558"\
+					"0dc1b7cd78e2c17/"\
 					"dashboard/test"
 			).to_return(:status => 200, :body => "YAY")
 

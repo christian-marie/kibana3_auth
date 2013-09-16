@@ -58,9 +58,13 @@ class ESProxy < Forwarder
 		@env['rack.session'][:filters]
 	end
 
+	def dashboard_namespace
+		Digest::SHA1::hexdigest(@env['rack.session'][:namespace])
+	end
+
 	# Hash the filters so that we can reuse identical filters.
 	def user_id
-		Digest::MD5::hexdigest(self.filters.to_json)
+		Digest::SHA1::hexdigest(self.filters.to_json)
 	end
 
 	# This is run before the request is sent upstream.
@@ -105,8 +109,12 @@ class ESProxy < Forwarder
 	end
 
 	# Make it appear as if each user has thier own private saved
-	# dashboards. This is done by adding the user_id to the request.
+	# dashboards. This is done by adding the dashboard_namespace to the
+	# request. This is hashed.
 	def privatise_dashboard
-		@env['PATH_INFO'].gsub!('kibana-int', "kibana-int_#{self.user_id}")
+		@env['PATH_INFO'].gsub!(
+			'kibana-int',
+			"kibana-int_#{self.dashboard_namespace}"
+		)
 	end
 end
