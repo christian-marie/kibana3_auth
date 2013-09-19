@@ -9,6 +9,9 @@ require 'rack/test'
 require 'webmock/rspec'
 require 'support'
 
+require 'coveralls'
+Coveralls.wear!
+
 RSpec.configure do |config|
 	config.order = "random"
 	config.color_enabled = true

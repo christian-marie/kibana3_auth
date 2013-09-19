@@ -8,4 +8,6 @@ group :development do
 	gem 'guard-rspec'
 	gem 'rack-test'
 	gem 'webmock'
+	gem 'coveralls', :require => false
 end
+
