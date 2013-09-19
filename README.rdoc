@@ -1,4 +1,5 @@
 {<img src="https://travis-ci.org/christian-marie/kibana3_auth.png?branch=master" alt="Build Status" />}[https://travis-ci.org/christian-marie/kibana3_auth]
+{<img src="https://coveralls.io/repos/christian-marie/kibana3_auth/badge.png?branch=master" alt="Coverage Status" />}[https://coveralls.io/r/christian-marie/kibana3_auth?branch=master] 
 = Kibana 3 authentication
 == Introduction
 This odd little rack application was built to serve a very particular need. I
