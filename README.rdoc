@@ -11,8 +11,8 @@ So I did that, then I tried to make it reuseable for someone else. This is the
 result.
 
 == Tested on
- * Production tested on ruby-1.9.3-p385
- * Unit tests pass on: {<img src="https://travis-ci.org/christian-marie/kibana3_auth.png?branch=master" alt="Build Status" />}[https://travis-ci.org/christian-marie/kibana3_auth]
+* Production tested on ruby-1.9.3-p385
+* Unit tests pass on: {<img src="https://travis-ci.org/christian-marie/kibana3_auth.png?branch=master" alt="Build Status" />}[https://travis-ci.org/christian-marie/kibana3_auth]
 
 == Features
 * Easy setup: one method to take a username and password then return a filter
