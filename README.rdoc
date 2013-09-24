@@ -1,4 +1,4 @@
-{<img src="https://travis-ci.org/christian-marie/kibana3_auth.png?branch=master" alt="Build Status" />}[https://travis-ci.org/christian-marie/kibana3_auth]
+{<img src="https://travis-ci.org/christian-marie/kibana3_auth.png?branch=v1.0.0" alt="Build Status" />}[https://travis-ci.org/christian-marie/kibana3_auth]
 {<img src="https://coveralls.io/repos/christian-marie/kibana3_auth/badge.png?branch=v1.0.0" alt="Coverage Status" />}[https://coveralls.io/r/christian-marie/kibana3_auth?branch=v1.0.0] 
 = Kibana 3 authentication
 == Introduction
