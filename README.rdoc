@@ -1,5 +1,5 @@
 {<img src="https://travis-ci.org/christian-marie/kibana3_auth.png?branch=master" alt="Build Status" />}[https://travis-ci.org/christian-marie/kibana3_auth]
-{<img src="https://coveralls.io/repos/christian-marie/kibana3_auth/badge.png?branch=master" alt="Coverage Status" />}[https://coveralls.io/r/christian-marie/kibana3_auth?branch=master] 
+{<img src="https://coveralls.io/repos/christian-marie/kibana3_auth/badge.png?branch=v1.0.0" alt="Coverage Status" />}[https://coveralls.io/r/christian-marie/kibana3_auth?branch=v1.0.0] 
 = Kibana 3 authentication
 == Introduction
 This odd little rack application was built to serve a very particular need. I
@@ -12,7 +12,7 @@ result.
 
 == Tested on
 * Production tested on ruby-1.9.3-p385
-* Unit tests pass on: {<img src="https://travis-ci.org/christian-marie/kibana3_auth.png?branch=master" alt="Build Status" />}[https://travis-ci.org/christian-marie/kibana3_auth]
+* Unit tests pass on: {<img src="https://travis-ci.org/christian-marie/kibana3_auth.png?branch=v1.0.0" alt="Build Status" />}[https://travis-ci.org/christian-marie/kibana3_auth]
 
 == Features
 * Easy setup: one method to take a username and password then return a filter
