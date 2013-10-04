@@ -36,7 +36,7 @@ class Forwarder
 
 				req.body = request_body
 			else
-				raise "method not supported: #{method}"
+				raise "method not supported"
 			end
 			 
 			http.request(req)
