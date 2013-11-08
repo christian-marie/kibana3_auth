@@ -44,6 +44,22 @@ describe ::Router do
 			expect(last_response.body).to eql('hai')
 		end
 
+		it 'hits elasticsearch on /_nodes' do
+			::ESProxy.any_instance.should_receive(:call).
+				and_return([200, {}, ['hai']])
+			expect(post('/_nodes').status).
+				to eql(200)
+			expect(last_response.body).to eql('hai')
+		end
+
+		it 'hits elasticsearch on /_all/_mapping' do
+			::ESProxy.any_instance.should_receive(:call).
+				and_return([200, {}, ['hai']])
+			expect(post('/_all/_mapping').status).
+				to eql(200)
+			expect(last_response.body).to eql('hai')
+		end
+
 		it 'routes to logout' do
 			::Login.any_instance.should_receive(:call).
 				and_return([200, {}, ['logout']])
