@@ -88,6 +88,8 @@ class ESProxy < Forwarder
 			rewrite_search_request
 		when %r{\A/kibana-int/dashboard/\w+\z}
 			privatise_dashboard
+		when %r{\A/[^/]*/_mapping/*?\z}
+		when %r{\A/_nodes/?\z}
 		else
 			raise 'You should not be here, this is a bug'
 		end
