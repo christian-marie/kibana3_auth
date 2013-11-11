@@ -21,14 +21,14 @@ describe ::Router do
 			expect(get('404').status).to eql(404)
 		end
 
-		it 'hits elasticsearch on _aliases' do
+		it 'hits ESProxy on _aliases' do
 			::ESProxy.any_instance.should_receive(:call).
 				and_return([200, {}, ['hai']])
 			expect(get('/_aliases/').status).to eql(200)
 			expect(last_response.body).to eql('hai')
 		end
 
-		it 'hits elasticsearch on _search' do
+		it 'hits ESProxy on _search' do
 			::ESProxy.any_instance.should_receive(:call).
 				and_return([200, {}, ['hai']])
 			expect(get('/logstash-2013.07.30/_search/').status).
@@ -36,7 +36,7 @@ describe ::Router do
 			expect(last_response.body).to eql('hai')
 		end
 
-		it 'hits elasticsearch on /kibana-int/dashboard/foo' do
+		it 'hits ESProxy on /kibana-int/dashboard/foo' do
 			::ESProxy.any_instance.should_receive(:call).
 				and_return([200, {}, ['hai']])
 			expect(post('/kibana-int/dashboard/foo/').status).
@@ -44,7 +44,7 @@ describe ::Router do
 			expect(last_response.body).to eql('hai')
 		end
 
-		it 'hits elasticsearch on /_nodes' do
+		it 'hits ESProxy on /_nodes' do
 			::ESProxy.any_instance.should_receive(:call).
 				and_return([200, {}, ['hai']])
 			expect(post('/_nodes').status).
@@ -52,7 +52,7 @@ describe ::Router do
 			expect(last_response.body).to eql('hai')
 		end
 
-		it 'hits elasticsearch on /_all/_mapping' do
+		it 'hits ESProxy on /_all/_mapping' do
 			::ESProxy.any_instance.should_receive(:call).
 				and_return([200, {}, ['hai']])
 			expect(post('/_all/_mapping').status).

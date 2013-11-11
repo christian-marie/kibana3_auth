@@ -70,10 +70,7 @@ class ESProxy < Forwarder
 	# This is run before the request is sent upstream.
 	#
 	# We have to flag _aliases as a special request, so that we know to
-	# create aliases from it when we get he response of all the aliases
-	# later.
-	#
-	# We only allow _aliases and _search to be hit
+	# create aliases from it when we recieve all the aliases later.
 	def rewrite_env
 		request = Rack::Request.new(@env)
 
@@ -84,12 +81,13 @@ class ESProxy < Forwarder
 			# request later on
 			@env['ALIAS_REQUEST'] = true
 		when %r{\A/logstash-[\d\.]{10}/_search/*?\z}
-			# 
 			rewrite_search_request
-		when %r{\A/kibana-int/dashboard/\w+}
+		when %r{\A/kibana-int/dashboard/}
 			privatise_dashboard
 		when %r{\A/[^/]*/_mapping/*?\z}
+			raise 'Must POST' unless request.post?
 		when %r{\A/_nodes/?\z}
+			raise 'Must POST' unless request.post?
 		else
 			raise 'You should not be here, this is a bug'
 		end
