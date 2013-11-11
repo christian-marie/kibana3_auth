@@ -20,6 +20,18 @@ result.
 * Private dashboards per user (with configurable namespaces)
 * HTML login form
 
+== Kibana3 Milestone 4 support
+
+Is currently being tested and will be released in a week or so. If you would
+like to upgrade now, simply checkout master instead of v1.0.0 and re-configure
+the kibana/ submodule.
+
+Something like:
+
+ $ git pull
+ $ git checkout master
+ $ sed -i s/9200/8000/ kibana/src/config.js
+
 == Setup
 I will assume that you can configure your own unicorns and webservers to host
 this correctly. This documentation will get you set up with a local server
