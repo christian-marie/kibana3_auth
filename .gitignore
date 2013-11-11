@@ -2,3 +2,4 @@ config/config.rb
 config/login.rb
 tmp/
 coverage/
+.bundle/
