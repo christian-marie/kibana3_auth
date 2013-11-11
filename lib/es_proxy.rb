@@ -85,9 +85,9 @@ class ESProxy < Forwarder
 		when %r{\A/kibana-int/dashboard/}
 			privatise_dashboard
 		when %r{\A/[^/]*/_mapping/*?\z}
-			raise 'Must POST' unless request.post?
+			raise 'Must GET' unless request.get?
 		when %r{\A/_nodes/?\z}
-			raise 'Must POST' unless request.post?
+			raise 'Must GET' unless request.get?
 		else
 			raise 'You should not be here, this is a bug'
 		end

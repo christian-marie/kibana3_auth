@@ -82,24 +82,24 @@ describe ::ESProxy do
 
 		it 'allows POST /_nodes' do
 			stub_request(
-				:post,
+				:get,
 				"http://localhost:9200/_nodes/"
 			).to_return(:status => 200, :body => "nodes")
 
 
-			expect(post('/_nodes/').status).
+			expect(get('/_nodes/').status).
 				to eql(200)
 			expect(last_response.body).to eql('nodes')
 		end
 
 		it 'allows /_all/_mapping' do
 			stub_request(
-				:post,
+				:get,
 				"http://localhost:9200/_all/_mapping/"
 			).to_return(:status => 200, :body => "mapping")
 
 
-			expect(post('/_all/_mapping/').status).
+			expect(get('/_all/_mapping/').status).
 				to eql(200)
 			expect(last_response.body).to eql('mapping')
 		end

@@ -47,7 +47,7 @@ describe ::Router do
 		it 'hits ESProxy on /_nodes' do
 			::ESProxy.any_instance.should_receive(:call).
 				and_return([200, {}, ['hai']])
-			expect(post('/_nodes').status).
+			expect(get('/_nodes').status).
 				to eql(200)
 			expect(last_response.body).to eql('hai')
 		end
@@ -55,7 +55,7 @@ describe ::Router do
 		it 'hits ESProxy on /_all/_mapping' do
 			::ESProxy.any_instance.should_receive(:call).
 				and_return([200, {}, ['hai']])
-			expect(post('/_all/_mapping').status).
+			expect(get('/_all/_mapping').status).
 				to eql(200)
 			expect(last_response.body).to eql('hai')
 		end
