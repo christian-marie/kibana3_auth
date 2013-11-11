@@ -86,7 +86,7 @@ class ESProxy < Forwarder
 		when %r{\A/logstash-[\d\.]{10}/_search/*?\z}
 			# 
 			rewrite_search_request
-		when %r{\A/kibana-int/dashboard/\w+\z}
+		when %r{\A/kibana-int/dashboard/\w+}
 			privatise_dashboard
 		else
 			raise 'You should not be here, this is a bug'
