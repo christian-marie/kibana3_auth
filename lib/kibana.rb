@@ -10,7 +10,7 @@ class Kibana
 			env['PATH_INFO'] = '/index.html'
 		end
 
-		response = ::Rack::File.new('kibana').call(env)
+		response = ::Rack::File.new('kibana/src').call(env)
 		if env['PATH_INFO'] == '/index.html' then
 			# Tack on our header to add a logout button
 			status, headers, body = response

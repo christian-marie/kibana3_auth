@@ -10,9 +10,11 @@ class Router
 	URL_MAP = [
 		[%r{\A/(?:logout|login)/*?\z}    , :upstream_login ]         ,
 		[%r{\A/_aliases/*?\z}            , :upstream_elastic_search] ,
+		[%r{\A/[^/]*/_mapping/*?\z}      , :upstream_elastic_search] ,
+		[%r{\A/_nodes/?\z}               , :upstream_elastic_search] ,
 		[
 			%r{\A/logstash-[\d\.]{10}/_search/*?\z},
-   			:upstream_elastic_search
+			:upstream_elastic_search
 		],
 		[%r{\A/kibana-int/dashboard/\w+} , :upstream_elastic_search] ,
 		[//                              , :upstream_kibana]         ,
