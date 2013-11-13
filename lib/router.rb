@@ -13,7 +13,7 @@ class Router
 		[%r{\A/[^/]*/_mapping/*?\z}      , :upstream_elastic_search] ,
 		[%r{\A/_nodes/?\z}               , :upstream_elastic_search] ,
 		[
-			%r{\A/logstash-[\d\.]{10}/_search/*?\z},
+			%r{\A/logstash-[\d\.]{10}(,logstash-[\d\.]{10})*/_search/*?\z},
 			:upstream_elastic_search
 		],
 		[%r{\A/kibana-int/dashboard/}    , :upstream_elastic_search] ,

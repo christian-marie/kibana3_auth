@@ -66,6 +66,25 @@ describe ::ESProxy do
 			expect(last_response.body).to eql('PONY LOGS')
 		end
 
+		it 'makes safe a search on a protected indices' do
+			# Should proxy a request to the alias created before
+			stub_request(
+				:get,
+				"http://localhost:9200/"\
+					"logstash-2013.08.02_"\
+					"baee1068429a8e0b44179ca85b8d51bf3a"\
+					"10746d"\
+					",logstash-2013.08.03_"\
+					"baee1068429a8e0b44179ca85b8d51bf3a"\
+					"10746d"\
+					"/_search"
+			).to_return(:status => 200, :body => "PONY MULTI LOGS")
+
+			get('/logstash-2013.08.02,logstash-2013.08.03/_search')
+			expect(last_response.status).to eql(200)
+			expect(last_response.body).to eql('PONY MULTI LOGS')
+		end
+
 		it 'makes private a put to dashboards' do
 			stub_request(
 				:put,
