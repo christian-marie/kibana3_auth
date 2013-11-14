@@ -80,7 +80,7 @@ class ESProxy < Forwarder
 			# Flag the aliases to be requested when we make the
 			# request later on
 			@env['ALIAS_REQUEST'] = true
-		when %r{\A/logstash-[\d\.]{10}/_search/*?\z}
+		when %r{\A/logstash-[\d\.]{10}(,logstash-[\d\.]{10})*/_search/*?\z}
 			rewrite_search_request
 		when %r{\A/kibana-int/dashboard/}
 			privatise_dashboard
@@ -93,7 +93,7 @@ class ESProxy < Forwarder
 		end
 	end
 
-	# Try to make a search safe, by inserting _customer_id before the
+	# Try to make a search safe, by inserting _user_id before the
 	# /_search in a string ending in /_search
 	#
 	# This means that the request will be for the filtered alias as opposed
@@ -102,9 +102,9 @@ class ESProxy < Forwarder
 		match = @env['PATH_INFO'] =~ /\/_search\z/
 		raise "Couldn't make search safe, exploding" unless match
 
-		@env['PATH_INFO'].insert(
-			match,
-			"_#{self.user_id}"
+		@env['PATH_INFO'].gsub!(
+			/(logstash-[\d\.]{10})/,
+			"\\1_#{self.user_id}"
 		)
 	end
 
