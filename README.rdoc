@@ -1,6 +1,7 @@
 {<img src="https://travis-ci.org/christian-marie/kibana3_auth.png?branch=v1.0.0" alt="Build Status" />}[https://travis-ci.org/christian-marie/kibana3_auth]
 {<img src="https://coveralls.io/repos/christian-marie/kibana3_auth/badge.png?branch=v1.0.0" alt="Coverage Status" />}[https://coveralls.io/r/christian-marie/kibana3_auth?branch=v1.0.0] 
 = Kibana 3 authentication and authorization
+
 == Introduction
 
 This rack application was built to serve a very particular purpose: add
@@ -11,11 +12,12 @@ snippet of code that takes a username and password and returns an elasticsearch
 filter.
 
 == Tested on
+
 * Production tested on ruby-1.9.3-p385
 * Unit tests pass on: {<img src="https://travis-ci.org/christian-marie/kibana3_auth.png?branch=v1.0.0" alt="Build Status" />}[https://travis-ci.org/christian-marie/kibana3_auth]
 
 == Features
-* Easy setup: one method to take a username and password then return a filter
+
 * Serves static kibana pages from within the application
 * Private dashboards per user (with configurable namespaces)
 * HTML login form
@@ -32,7 +34,7 @@ If you had a custom javascript config, this will destroy it. If you want to
 preserve that, I'm sure you can work out how.
 
  $ cd kibana3_auth
- $ git pull && git checkout master
+ $ git pull && git checkout v1.0.0milestone4
  $ pushd kibana; git checkout -- . ; popd
  $ git submodule update
 
@@ -53,7 +55,7 @@ running under 'rackup'.
 We need to download this repo, kibana, and rack.
 
   $ git clone https://github.com/christian-marie/kibana3_auth.git
-  $ cd kibana3_auth && git checkout v1.0.0
+  $ cd kibana3_auth && git checkout v1.0.0milestone4
   $ git submodule init && git submodule update
   $ bundle install --without development
 
@@ -105,7 +107,7 @@ Here is an example example config.rb:
 Configure kibana to hit ElasticSearch on the port on which you plan to run the
 rack application. For example, should you wish to run on port 8000:
 
-  $ sed -i s/9200/8000/ kibana/config.js
+  $ sed -i s/9200/8000/ kibana/src/config.js
 
 === Step four - profit!
 
