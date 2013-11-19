@@ -1,13 +1,13 @@
 {<img src="https://travis-ci.org/christian-marie/kibana3_auth.png?branch=v1.0.0" alt="Build Status" />}[https://travis-ci.org/christian-marie/kibana3_auth]
 {<img src="https://coveralls.io/repos/christian-marie/kibana3_auth/badge.png?branch=v1.0.0" alt="Coverage Status" />}[https://coveralls.io/r/christian-marie/kibana3_auth?branch=v1.0.0] 
-= Kibana 3 authentication
+= Kibana 3 authentication and authorization
 == Introduction
 This odd little rack application was built to serve a very particular need. I
 wanted to have a multi-tenant logstash installation that would allow customers
-to log in and view thier logs based on certain filters. Also I didn't really
-want dependencies, so there are none besides rack and JSON.
+to authenticate and view thier logs based on certain filters. Also I didn't
+really want dependencies, so there are none besides rack and JSON.
 
-So I did that, then I tried to make it reuseable for someone else. This is the
+So I did that, then I tried to make it re-usable for someone else. This is the
 result.
 
 == Tested on
@@ -20,32 +20,43 @@ result.
 * Private dashboards per user (with configurable namespaces)
 * HTML login form
 
-== Kibana3 Milestone 4 support
+== Kibana3 Milestone 3 support
 
-Is currently being tested and will be released in a week or so. If you would
-like to upgrade now, simply checkout master instead of v1.0.0 and re-configure
-the kibana/ submodule.
+If you want to use milestone 3, see: 
 
-Something like:
+https://github.com/christian-marie/kibana3_auth/tree/v1.0.0
 
- $ git pull
- $ git checkout master
- $ sed -i s/9200/8000/ kibana/src/config.js
+== Upgrading from Kibana3 Milestone 3 to Milestone 4
 
-== Setup
-I will assume that you can configure your own unicorns and webservers to host
+If you had a custom javascript config, this will blow it away. If you want to
+preserve that, I'm sure you can work out how.
+
+ $ cd kibana3_auth
+ $ git pull && git checkout master
+ $ pushd kibana; git checkout -- . ; popd
+ $ git submodule update
+
+Now you need to make sure that your new config has the port that you plan to
+run your webserver on, take note that the location of the config.js has moved.
+
+ $ sed -i s/9200/80/ kibana/src/config.js
+
+== New installation
+
+I will assume that you can configure your own unicorns and web servers to host
 this correctly. This documentation will get you set up with a local server
 running under 'rackup'.
 
-=== Step one
+=== Step one - installation
 We need to download this repo, kibana, and rack.
+
   $ git clone https://github.com/christian-marie/kibana3_auth.git
   $ cd kibana3_auth && git checkout v1.0.0
   $ git submodule init && git submodule update
   $ bundle install --without development
 
-=== Step two
-Configuration! Now, I figured pretty much everyone is going to have a different
+=== Step two - configuration
+Pretty much everyone is going to have a different
 idea of how to authenticate a user and then filter logs. So you get to write
 code for this yourself. Don't panic, it's one function.
 
@@ -53,12 +64,14 @@ The configuration is a ruby file in config/config.rb
 
  $ $EDITOR config/config.rb
 
-We need to specify a few things as a hash, these are all mandatory:
+We need to specify a few things as a ruby hash, these are all mandatory:
+
 :session_secret:: This must be set to a random, long, string. It is a secret!
 :backend:: The elasticsearch REST interface URI, maybe http://localhost:9200
-:login:: A #call able ruby object to recieve a username and password and return a set of ElasticSearch filters.
+:login:: A #call able ruby object to receive a username and password and return a set of ElasticSearch filters.
 
-==== Example config
+Here is an example example config.rb:
+
   # This method must return an ElasticSearch filter or false
   def login(user, pass)
           # We want anyone with a name starting with p to see everything.
@@ -85,20 +98,25 @@ We need to specify a few things as a hash, these are all mandatory:
           :login          => method(:login),
   }
 
-=== Step three
+=== Step three - ???
+
 Configure kibana to hit ElasticSearch on the port on which you plan to run the
 rack application. For example, should you wish to run on port 8000:
+
   $ sed -i s/9200/8000/ kibana/config.js
 
-=== Step four
-Profit!
+=== Step four - profit!
+
  $ bundle exec rackup -p 8000
 
 Obviously in production you want to run this under nginx/unicorn or something.
+I currently have it running under nginx/unicorn with SSL.
 
 === Optional configurable dashboard namespaces
-Dashboards are namespaced by default by a hash of the username password.
-You can override this with the :dashboard_namespace configuration parameter.
+
+Dashboards are namespaced by default by a hash of the username password.  You
+can override this with the :dashboard_namespace parameter. This works much like
+login, and receives the same username and password.
 
 For example, to give everyone the same namespace and allow anyone access:
 
@@ -111,3 +129,7 @@ For example, to give everyone the same namespace and allow anyone access:
   		"POTATO!"
   	}
   }
+
+== License
+
+MIT
