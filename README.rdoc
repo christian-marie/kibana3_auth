@@ -4,8 +4,7 @@
 == Introduction
 
 This rack application was built to serve a very particular purpose: add
-authentication to kibana3 and allow users to view only thier logs, based on
-certain filters.
+authentication to kibana3 and allow users to view only thier logs.
 
 The actual access control that you do is entirely up to you. You provide a
 snippet of code that takes a username and password and returns an elasticsearch
@@ -27,9 +26,9 @@ If you want to use milestone 3, see:
 
 https://github.com/christian-marie/kibana3_auth/tree/v1.0.0
 
-== Upgrading from Kibana3 Milestone 3 to Milestone 4
+== Upgrading from v1.0.0 to v1.0.0milestone4
 
-If you had a custom javascript config, this will blow it away. If you want to
+If you had a custom javascript config, this will destroy it. If you want to
 preserve that, I'm sure you can work out how.
 
  $ cd kibana3_auth
@@ -41,6 +40,8 @@ Now you need to make sure that your new config has the port that you plan to
 run your webserver on, take note that the location of the config.js has moved.
 
  $ sed -i s/9200/80/ kibana/src/config.js
+
+Done!
 
 == New installation
 
@@ -119,7 +120,8 @@ Dashboards are namespaced by default by a hash of the username password.  You
 can override this with the :dashboard_namespace parameter. This works much like
 login, and receives the same username and password.
 
-For example, to give everyone the same namespace and allow anyone access:
+For example, to give everyone the same namespace and allow anyone access,
+config.rb might be:
 
   {
   	:session_secret => 'CHANGE ME',
