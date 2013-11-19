@@ -4,7 +4,7 @@ require 'router'
 
 CONFIG_FILE = File.join('config', 'config.rb')
 CONFIG = eval(File.read(CONFIG_FILE), binding, CONFIG_FILE, 1) rescue \
-	raise(::ArgumentError, "Put something in #{CONFIG_FILE}! #{$!}")
+	raise(::ArgumentError, "Failed to read #{CONFIG_FILE}: #{$!}")
 
 unless CONFIG[:session_secret] then
 	raise(::ArgumentError, "Set a :session_secret in #{CONFIG_FILE}")
