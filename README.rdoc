@@ -2,13 +2,14 @@
 {<img src="https://coveralls.io/repos/christian-marie/kibana3_auth/badge.png?branch=v1.0.0" alt="Coverage Status" />}[https://coveralls.io/r/christian-marie/kibana3_auth?branch=v1.0.0] 
 = Kibana 3 authentication and authorization
 == Introduction
-This odd little rack application was built to serve a very particular need. I
-wanted to have a multi-tenant logstash installation that would allow customers
-to authenticate and view thier logs based on certain filters. Also I didn't
-really want dependencies, so there are none besides rack and JSON.
 
-So I did that, then I tried to make it re-usable for someone else. This is the
-result.
+This rack application was built to serve a very particular purpose: add
+authentication to kibana3 and allow users to view only thier logs, based on
+certain filters.
+
+The actual access control that you do is entirely up to you. You provide a
+snippet of code that takes a username and password and returns an elasticsearch
+filter.
 
 == Tested on
 * Production tested on ruby-1.9.3-p385
