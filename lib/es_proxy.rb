@@ -29,8 +29,9 @@ class ESProxy < Forwarder
 		read_body = ''
 		response_body.each{|i| read_body += i}
 
-		actions = JSON.parse(read_body).map do |k,v|
-			next unless k =~ /\A#{::Router::LOGSTASH_INDEX}\z/
+		actions = JSON.parse(read_body).select do |k, _|
+			k =~ /\A#{::Router::LOGSTASH_INDEX}\z/
+		end.map do |k,v|
 			action = {
 				'add' => {
 					'index'  => k ,

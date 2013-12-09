@@ -27,7 +27,8 @@ describe ::ESProxy do
 			# so that we can make a subsequent request to create
 			# filtered ones.
 			upstream_response = \
-				'{"logstash-2013.08.02":{"aliases":{}}}'
+				'{"logstash-2013.08.02":{"aliases":{}}' \
+				',"some other index":{"aliases":{}}}'
 			stub_request(:get, "http://localhost:9200/_aliases").
 				to_return(
 					:status => 200,
