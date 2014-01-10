@@ -8,6 +8,7 @@ class Router
 
 	LOGSTASH_INDEX = %r{(logstash-[\d\.]{10})}
 	SEARCH_PATH    = %r{\A/(?:#{LOGSTASH_INDEX},?)+/_search/*?\z}
+	ALIASES_PATH   = %r{\A/(?:#{LOGSTASH_INDEX},?)+/_aliases\z}
 
 	# Evaluated in order, from top to bottom.
 	URL_MAP = [
@@ -16,6 +17,7 @@ class Router
 		[%r{\A/[^/]*/_mapping/*?\z}      , :upstream_elastic_search] ,
 		[%r{\A/_nodes/?\z}               , :upstream_elastic_search] ,
 		[SEARCH_PATH                     , :upstream_elastic_search] ,
+		[ALIASES_PATH                    , :upstream_elastic_search] ,
 		[%r{\A/kibana-int/dashboard/}    , :upstream_elastic_search] ,
 		[//                              , :upstream_kibana]         ,
 	]
