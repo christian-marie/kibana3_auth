@@ -77,7 +77,7 @@ class ESProxy < Forwarder
 		request = Rack::Request.new(@env)
 
 		case @env['PATH_INFO']
-		when %r{\A/_aliases/*?\z}
+		when %r{\A/_aliases/*?\z}, Router::ALIASES_PATH
 			raise 'Must GET' unless request.get?
 			# Flag the aliases to be requested when we make the
 			# request later on
