@@ -14,4 +14,5 @@ unless CONFIG[:backend] then
 end
 
 use Rack::Session::Cookie, :secret => CONFIG[:session_secret]
+use Rack::ContentType, "text/html"
 run ::Router.new(CONFIG)
