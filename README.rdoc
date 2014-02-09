@@ -28,7 +28,7 @@ If you want to use milestone 3, see:
 
 https://github.com/christian-marie/kibana3_auth/tree/v1.0.0
 
-== Upgrading from v1.0.0 to v1.0.0milestone4
+== Upgrading from v1.0.0 to v1.0.1milestone4
 
 If you had a custom javascript config, this will destroy it. If you want to
 preserve that, I'm sure you can work out how.
