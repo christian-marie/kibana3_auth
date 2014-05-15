@@ -13,8 +13,7 @@ filter.
 
 == Tested on
 
-* Firefox -- Some have reported that Safari will not work without the Thin
-	     webserver. I cannot confirm this.
+* Firefox -- Some have reported that Safari will not work without the Thin webserver. I cannot confirm this.
 * Production tested on ruby-1.9.3-p385
 * Unit tests pass on: {<img src="https://travis-ci.org/christian-marie/kibana3_auth.png?branch=v1.0.0" alt="Build Status" />}[https://travis-ci.org/christian-marie/kibana3_auth]
 
