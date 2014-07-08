@@ -15,6 +15,7 @@ class Router
    			:upstream_elastic_search
 		],
 		[%r{\A/kibana-int/dashboard/\w+} , :upstream_elastic_search] ,
+        [%r{\A/_nodes\z}                 , :upstream_elastic_search] ,
 		[//                              , :upstream_kibana]         ,
 	]
 
