@@ -9,13 +9,13 @@ class Router
 	# Evaluated in order, from top to bottom.
 	URL_MAP = [
 		[%r{\A/(?:logout|login)/*?\z}    , :upstream_login ]         ,
-		[%r{\A/_aliases/*?\z}            , :upstream_elastic_search] ,
+		[%r{\A/.*_aliases/*?\z}           , :upstream_elastic_search] ,
 		[
-			%r{\A/logstash-[\d\.]{10}/_search/*?\z},
+			%r{\A\/.*\/_search/*?\z},
    			:upstream_elastic_search
 		],
 		[%r{\A/kibana-int/dashboard/\w+} , :upstream_elastic_search] ,
-        [%r{\A/_nodes\z}                 , :upstream_elastic_search] ,
+		[%r{\A/_nodes\z}		 , :upstream_elastic_search] ,
 		[//                              , :upstream_kibana]         ,
 	]
 
@@ -30,6 +30,7 @@ class Router
 	end
 
 	def call(env)
+
 		# No access for you! Unless you have the secret session.
 		# Or of course, you are asking for '/login', exactly.
 		unless env['rack.session'][:logged_in] then
@@ -40,7 +41,6 @@ class Router
 			response.redirect('/login')
 			return response.finish
 		end
-
 
 		URL_MAP.each do |pattern, sym|
 			if env['PATH_INFO'] =~ pattern then
