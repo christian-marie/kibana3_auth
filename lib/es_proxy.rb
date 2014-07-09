@@ -26,6 +26,7 @@ class ESProxy < Forwarder
 	# Make a request to the upstream ES server to create the filtered
 	# aliases we need.
 	def create_aliases(response_body)
+
 		read_body = ''
 		response_body.each{|i| read_body += i}
 
@@ -78,16 +79,18 @@ class ESProxy < Forwarder
 		request = Rack::Request.new(@env)
 
 		case @env['PATH_INFO']
-		when %r{\A/_aliases/*?\z}
+		when %r{\A/.*_aliases/*?\z}
 			raise 'Must GET' unless request.get?
 			# Flag the aliases to be requested when we make the
 			# request later on
 			@env['ALIAS_REQUEST'] = true
-		when %r{\A/logstash-[\d\.]{10}/_search/*?\z}
+		when %r{\A\/.*\/_search/*?\z}
 			# 
 			rewrite_search_request
 		when %r{\A/kibana-int/dashboard/\w+\z}
 			privatise_dashboard
+		when %r{\A/_nodes\z}
+			#
 		else
 			raise 'You should not be here, this is a bug'
 		end
@@ -99,13 +102,32 @@ class ESProxy < Forwarder
 	# This means that the request will be for the filtered alias as opposed
 	# to the actual index.
 	def rewrite_search_request
-		match = @env['PATH_INFO'] =~ /\/_search\z/
+		match = /\A\/(.*)\/_search\z/.match(@env['PATH_INFO'])
 		raise "Couldn't make search safe, exploding" unless match
 
-		@env['PATH_INFO'].insert(
-			match,
-			"_#{self.user_id}"
-		)
+		indexes = match[1]
+
+		if /,/.match(indexes)
+
+			tmp = []
+
+			indexes.split(/,/).each do |current_index|
+
+				tmp.push(current_index + "_#{self.user_id}")
+
+			end
+
+			indexes = tmp.join(',')
+			
+		else
+            
+			indexes += "_#{self.user_id}"
+
+		end
+        
+		@env['PATH_INFO'] = "/#{indexes}/_search"
+		
+
 	end
 
 	# Make it appear as if each user has thier own private saved
