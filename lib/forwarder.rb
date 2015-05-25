@@ -18,7 +18,7 @@ class Forwarder
 			end
 		end
  
-		res = Net::HTTP.start(@uri.host, @uri.port) do |http|
+		res = Net::HTTP.start(@uri.host, @uri.port, :read_timeout => 600) do |http|
 			m = rackreq.request_method
 			case m
 			when "GET", "HEAD", "DELETE", "OPTIONS", "TRACE"
